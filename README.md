@@ -13,7 +13,7 @@ Mục tiêu của dự án là thiết lập hạ tầng lưu trữ, tự độn
 
 ## 🗄️ 2. Tập dữ liệu (Datasets)
 Dự án sử dụng bộ dữ liệu công cộng chuẩn từ **NYC Taxi & Limousine Commission (TLC)**, bao gồm:
-1. **Yellow Taxi Trip Records:** Hàng triệu bản ghi chi tiết về các chuyến đi của taxi vàng tại New York (Được lấy từ Azure Open Datasets).
+1. **NYC Taxi & Limousine Commission - green taxi trip records:** chứa bản ghi chi tiết về các chuyến đi của taxi xanh tại New York (Được lấy từ Azure Open Datasets).
 2. **Taxi Zone Lookup:** File danh sách phân vùng địa lý (`taxi_zone_lookup.csv`) được tự động hóa kéo về từ nguồn HTTP của chính quyền NYC thông qua Synapse Pipeline.
 
 ## 🏗️ 3. Kiến trúc Hệ thống (Architecture)
