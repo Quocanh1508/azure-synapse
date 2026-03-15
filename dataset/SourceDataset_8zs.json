@@ -1,0 +1,38 @@
+{
+	"name": "SourceDataset_8zs",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "NYC_taxi_pickup",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "LocationID",
+				"type": "String"
+			},
+			{
+				"name": "Borough",
+				"type": "String"
+			},
+			{
+				"name": "Zone",
+				"type": "String"
+			},
+			{
+				"name": "service_zone",
+				"type": "String"
+			}
+		]
+	}
+}
