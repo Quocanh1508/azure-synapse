@@ -27,3 +27,7 @@ Hệ thống được thiết kế theo luồng kiến trúc dữ liệu hiện 
 
 ## ⚙️ 4. Hướng dẫn sử dụng / Khôi phục môi trường
 *Mã nguồn trong kho lưu trữ này được liên kết trực tiếp với Azure Synapse Workspace
+1. Đảm bảo bạn có quyền truy cập vào Synapse Workspace (`hcmutebigdata01`).
+2. Clone repository này về hoặc xem trực tiếp cấu trúc thư mục `/pipeline`, `/dataset`, `/sqlscript` đã được Synapse tự động đồng bộ.
+3. Chạy Pipeline `Get_Taxi_Zone_Data` để load dữ liệu lookup.
+4. Chạy các file `.sql` trong thư mục SQL Scripts để xem kết quả phân tích.
