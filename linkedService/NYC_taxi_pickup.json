@@ -1,0 +1,17 @@
+{
+	"name": "NYC_taxi_pickup",
+	"properties": {
+		"description": "contain taxi's zone and locationID in NYC",
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://d37ci6vzurychx.cloudfront.net/misc/taxi+_zone_lookup.csv",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
