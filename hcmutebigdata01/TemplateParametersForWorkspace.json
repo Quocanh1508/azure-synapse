@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "hcmutebigdata01"
+		},
+		"hcmutebigdata01-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:hcmutebigdata01.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"NYC_taxi_pickup_properties_typeProperties_url": {
+			"value": "https://d37ci6vzurychx.cloudfront.net/misc/taxi+_zone_lookup.csv"
+		},
+		"hcmutebigdata01-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://dlhcmute.dfs.core.windows.net"
+		},
+		"nyc_tlc_green_sasUri": {
+			"value": ""
+		},
+		"nyc_tlc_yellow_sasUri": {
+			"value": ""
+		}
+	}
+}
