@@ -2,7 +2,7 @@
 	"name": "SQL script 1",
 	"properties": {
 		"content": {
-			"query": "SELECT TOP 100 *\nFROM OPENROWSET(\n    BULK '/data/taxi_zone_lookup.csv',\n    DATA_SOURCE = 'Datasrc',    \n    FORMAT = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = TRUE      \n               \n) AS [Result];",
+			"query": "SELECT TOP 100 *\nFROM OPENROWSET(\n    BULK '/data/taxi_zone_lookup.csv',\n    DATA_SOURCE = 'Datasrc',    \n    FORMAT = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = TRUE                 \n) AS [Result];",
 			"metadata": {
 				"language": "sql"
 			},
