@@ -1,0 +1,67 @@
+{
+	"name": "TaxiData_Pipeline",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "sparkpoolgr8",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "61430b68-7c7c-4295-880b-7b3407294c19"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/c4cee64a-137d-496f-98e0-a6997e0f4502/resourceGroups/bigdatautex01/providers/Microsoft.Synapse/workspaces/hcmutebigdata01/bigDataPools/sparkpoolgr8",
+				"name": "sparkpoolgr8",
+				"type": "Spark",
+				"endpoint": "https://hcmutebigdata01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpoolgr8",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.5",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					}
+				},
+				"source": [
+					"%%pyspark\n",
+					"spark.sql(\"SHOW DATABASES\").show()\n",
+					"print(\"Tự động hóa Pipeline thành công\")"
+				],
+				"execution_count": 2
+			}
+		]
+	}
+}
