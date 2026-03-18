@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 3",
+	"properties": {
+		"content": {
+			"query": "SELECT passengerCount as PassengerCount,\n      SUM(tripDistance) as SumTripDistance_miles,\n      AVG(tripDistance) as AvgTripDistance_miles\nFROM  dbo.YellowTaxi2019\nWHERE tripDistance > 0 AND passengerCount > 0\nGROUP BY passengerCount\nORDER BY passengerCount;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sqlpoolgr8",
+				"poolName": "sqlpoolgr8"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
