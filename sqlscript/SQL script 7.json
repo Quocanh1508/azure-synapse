@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 7",
+	"properties": {
+		"content": {
+			"query": "USE DataExplorationDB;\n\nCREATE EXTERNAL DATA SOURCE HcmuteLake\nWITH ( LOCATION = 'https://dlhcmute.dfs.core.windows.net' );\n\nCREATE LOGIN data_explorer WITH PASSWORD = 'My Very Strong Password 1234!';\nGO\n\nCREATE USER data_explorer FOR LOGIN data_explorer;\nGO\n\nGRANT ADMINISTER DATABASE BULK OPERATIONS TO data_explorer;\nGO\n\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK '/data/Customer/**',\n        DATA_SOURCE = 'HcmuteLake',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE \n    ) AS [result];",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "DataExplorationDB",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
