@@ -1,0 +1,106 @@
+{
+	"name": "notebookquocanh",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "sparkpoolgr8",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "ca75f1aa-246b-4c08-baad-190f76c72213"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/c4cee64a-137d-496f-98e0-a6997e0f4502/resourceGroups/bigdatautex01/providers/Microsoft.Synapse/workspaces/hcmutebigdata01/bigDataPools/sparkpoolgr8",
+				"name": "sparkpoolgr8",
+				"type": "Spark",
+				"endpoint": "https://hcmutebigdata01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpoolgr8",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.5",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\n",
+					"df = spark.read.load('wasbs://nyctlc@azureopendatastorage.blob.core.windows.net/green/puYear=2019/puMonth=1/*.parquet')\n",
+					"display(df.limit(10))"
+				],
+				"execution_count": 4
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"df.printSchema()"
+				],
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\n",
+					"df = spark.sql(\"\"\"\n",
+					"   SELECT passengerCount,\n",
+					"       SUM(tripDistance) as SumTripDistance,\n",
+					"       AVG(tripDistance) as AvgTripDistance\n",
+					"   FROM nyctaxi.trip\n",
+					"   WHERE tripDistance > 0 AND passengerCount > 0\n",
+					"   GROUP BY passengerCount\n",
+					"   ORDER BY passengerCount\n",
+					"\"\"\") \n",
+					"display(df)\n",
+					"df.write.mode(\"overwrite\").saveAsTable(\"nyctaxi.passengercountstatsnew\")"
+				],
+				"execution_count": 7
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					""
+				],
+				"execution_count": null
+			}
+		]
+	}
+}
