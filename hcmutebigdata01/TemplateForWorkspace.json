@@ -443,6 +443,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 5')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "COPY INTO dbo.NYCTaxiTripSmall\nFROM 'https://dlhcmute.dfs.core.windows.net/data/NYCTripSmall.parquet'\nWITH (\n    FILE_TYPE = 'PARQUET',\n    CREDENTIAL = (IDENTITY = 'Managed Identity'),\n    AUTO_CREATE_TABLE = 'ON'\n);",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "sqlpoolgr8",
+						"poolName": "sqlpoolgr8"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/TaxiData_Pipeline')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -463,7 +483,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "61430b68-7c7c-4295-880b-7b3407294c19"
+						"spark.autotune.trackingId": "55f5d016-db27-4578-ab03-0b1686f08618"
 					}
 				},
 				"metadata": {
@@ -506,7 +526,7 @@
 							"print(\"Tự động hóa Pipeline thành công\")"
 						],
 						"outputs": [],
-						"execution_count": 2
+						"execution_count": 1
 					}
 				]
 			},
@@ -557,7 +577,7 @@
 				"annotations": [],
 				"type": "PowerBIWorkspace",
 				"typeProperties": {
-					"workspaceID": "https://app.powerbi.com/groups/7d0392d6-f0ac-4c50-a267-67db55fcd6b2/list?experience=power-bi",
+					"workspaceID": "7d0392d6-f0ac-4c50-a267-67db55fcd6b2",
 					"tenantID": "8467d99c-8961-4a9c-9252-f53b2744fd8c"
 				}
 			},
