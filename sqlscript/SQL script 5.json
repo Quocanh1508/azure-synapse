@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 5",
+	"properties": {
+		"content": {
+			"query": "COPY INTO dbo.NYCTaxiTripSmall\nFROM 'https://dlhcmute.dfs.core.windows.net/data/NYCTripSmall.parquet'\nWITH (\n    FILE_TYPE = 'PARQUET',\n    CREDENTIAL = (IDENTITY = 'Managed Identity'),\n    AUTO_CREATE_TABLE = 'ON'\n);",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sqlpoolgr8",
+				"poolName": "sqlpoolgr8"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
