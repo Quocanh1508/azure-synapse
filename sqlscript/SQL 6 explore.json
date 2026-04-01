@@ -1,0 +1,17 @@
+{
+	"name": "SQL 6 explore",
+	"properties": {
+		"content": {
+			"query": "IF OBJECT_ID('dbo.PassengerCountStats', 'U') IS NOT NULL\n    DROP TABLE dbo.PassengerCountStats;\nGO\n\nSELECT \n    passengerCount as PassengerCount,\n    SUM(tripDistance) as SumTripDistance_miles,\n    AVG(tripDistance) as AvgTripDistance_miles\nINTO dbo.PassengerCountStats\nFROM dbo.YellowTaxi2019\nWHERE tripDistance > 0 AND passengerCount > 0\nGROUP BY passengerCount;\nGO\n\nSELECT * FROM dbo.PassengerCountStats\nORDER BY PassengerCount;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sqlpoolgr8",
+				"poolName": "sqlpoolgr8"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
