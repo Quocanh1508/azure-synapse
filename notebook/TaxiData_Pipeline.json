@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "61430b68-7c7c-4295-880b-7b3407294c19"
+				"spark.autotune.trackingId": "55f5d016-db27-4578-ab03-0b1686f08618"
 			}
 		},
 		"metadata": {
@@ -60,7 +60,7 @@
 					"spark.sql(\"SHOW DATABASES\").show()\n",
 					"print(\"Tự động hóa Pipeline thành công\")"
 				],
-				"execution_count": 2
+				"execution_count": 1
 			}
 		]
 	}
