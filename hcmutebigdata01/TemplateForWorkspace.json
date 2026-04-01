@@ -265,20 +265,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/PowerBIWorkspace1')]",
-			"type": "Microsoft.Synapse/workspaces/linkedServices",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": [],
-				"type": "PowerBIWorkspace",
-				"typeProperties": {
-					"workspaceID": "https://app.powerbi.com/groups/me/reports/338fc9b4-f7d3-43ba-b942-c53c07bfb135?ctid=f069fbab-b0f7-4e8c-a14c-d042ab513525&pbi_source=linkShare",
-					"tenantID": "8467d99c-8961-4a9c-9252-f53b2744fd8c"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/hcmutebigdata01-WorkspaceDefaultSqlServer')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -562,6 +548,20 @@
 			},
 			"dependsOn": [],
 			"location": "japaneast"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Super')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "PowerBIWorkspace",
+				"typeProperties": {
+					"workspaceID": "https://app.powerbi.com/groups/7d0392d6-f0ac-4c50-a267-67db55fcd6b2/list?experience=power-bi",
+					"tenantID": "8467d99c-8961-4a9c-9252-f53b2744fd8c"
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }
