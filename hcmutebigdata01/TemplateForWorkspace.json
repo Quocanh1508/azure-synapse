@@ -265,6 +265,20 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/Super')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "PowerBIWorkspace",
+				"typeProperties": {
+					"workspaceID": "7d0392d6-f0ac-4c50-a267-67db55fcd6b2",
+					"tenantID": "8467d99c-8961-4a9c-9252-f53b2744fd8c"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/hcmutebigdata01-WorkspaceDefaultSqlServer')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -463,6 +477,46 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 6')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE DATABASE DataExplorationDB \nCOLLATE Latin1_General_100_BIN2_UTF8;",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 7')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "USE DataExplorationDB;\n\nCREATE EXTERNAL DATA SOURCE HcmuteLake\nWITH ( LOCATION = 'https://dlhcmute.dfs.core.windows.net' );\n\nCREATE LOGIN data_explorer WITH PASSWORD = 'My Very Strong Password 1234!';\nGO\n\nCREATE USER data_explorer FOR LOGIN data_explorer;\nGO\n\nGRANT ADMINISTER DATABASE BULK OPERATIONS TO data_explorer;\nGO\n\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK '/data/Customer/**',\n        DATA_SOURCE = 'HcmuteLake',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE \n    ) AS [result];",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "DataExplorationDB",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/TaxiData_Pipeline')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -533,6 +587,118 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/notebookquocanh')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "sparkpoolgr8",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "ca75f1aa-246b-4c08-baad-190f76c72213"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "Synapse PySpark"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/c4cee64a-137d-496f-98e0-a6997e0f4502/resourceGroups/bigdatautex01/providers/Microsoft.Synapse/workspaces/hcmutebigdata01/bigDataPools/sparkpoolgr8",
+						"name": "sparkpoolgr8",
+						"type": "Spark",
+						"endpoint": "https://hcmutebigdata01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpoolgr8",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net"
+						},
+						"sparkVersion": "3.5",
+						"nodeCount": 10,
+						"cores": 4,
+						"memory": 28
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"metadata": {
+							"microsoft": {
+								"language": "python"
+							},
+							"collapsed": false
+						},
+						"source": [
+							"%%pyspark\n",
+							"df = spark.read.load('wasbs://nyctlc@azureopendatastorage.blob.core.windows.net/green/puYear=2019/puMonth=1/*.parquet')\n",
+							"display(df.limit(10))"
+						],
+						"outputs": [],
+						"execution_count": 4
+					},
+					{
+						"cell_type": "code",
+						"source": [
+							"df.printSchema()"
+						],
+						"outputs": [],
+						"execution_count": 5
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"microsoft": {
+								"language": "python"
+							},
+							"collapsed": false
+						},
+						"source": [
+							"%%pyspark\n",
+							"df = spark.sql(\"\"\"\n",
+							"   SELECT passengerCount,\n",
+							"       SUM(tripDistance) as SumTripDistance,\n",
+							"       AVG(tripDistance) as AvgTripDistance\n",
+							"   FROM nyctaxi.trip\n",
+							"   WHERE tripDistance > 0 AND passengerCount > 0\n",
+							"   GROUP BY passengerCount\n",
+							"   ORDER BY passengerCount\n",
+							"\"\"\") \n",
+							"display(df)\n",
+							"df.write.mode(\"overwrite\").saveAsTable(\"nyctaxi.passengercountstatsnew\")"
+						],
+						"outputs": [],
+						"execution_count": 7
+					},
+					{
+						"cell_type": "code",
+						"source": [
+							""
+						],
+						"outputs": [],
+						"execution_count": null
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/sparkpoolgr8')]",
 			"type": "Microsoft.Synapse/workspaces/bigDataPools",
 			"apiVersion": "2019-06-01-preview",
@@ -568,20 +734,6 @@
 			},
 			"dependsOn": [],
 			"location": "japaneast"
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/Super')]",
-			"type": "Microsoft.Synapse/workspaces/linkedServices",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": [],
-				"type": "PowerBIWorkspace",
-				"typeProperties": {
-					"workspaceID": "7d0392d6-f0ac-4c50-a267-67db55fcd6b2",
-					"tenantID": "8467d99c-8961-4a9c-9252-f53b2744fd8c"
-				}
-			},
-			"dependsOn": []
 		}
 	]
 }
