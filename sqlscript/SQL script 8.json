@@ -2,7 +2,7 @@
 	"name": "SQL script 8",
 	"properties": {
 		"content": {
-			"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://dlhcmute.dfs.core.windows.net/data/NYCTaxi/PassengerCountStats_parquetformat/**',\n        FORMAT = 'PARQUET'\n    ) AS [result]\n",
+			"query": "\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://dlhcmute.dfs.core.windows.net/data/NYCTaxi/PassengerCountStats_parquetformat/**',\n        FORMAT = 'PARQUET'\n    ) AS [result]\n",
 			"metadata": {
 				"language": "sql"
 			},
