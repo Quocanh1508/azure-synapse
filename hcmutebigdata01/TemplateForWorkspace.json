@@ -158,6 +158,48 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/Pipeline 2')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Notebook1",
+						"type": "SynapseNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebook": {
+								"referenceName": "TaxiData_Pipeline",
+								"type": "NotebookReference"
+							},
+							"snapshot": true,
+							"conf": {
+								"spark.dynamicAllocation.enabled": null,
+								"spark.dynamicAllocation.minExecutors": null,
+								"spark.dynamicAllocation.maxExecutors": null
+							},
+							"numExecutors": null
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/notebooks/TaxiData_Pipeline')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/DestinationDataset_8zs')]",
 			"type": "Microsoft.Synapse/workspaces/datasets",
 			"apiVersion": "2019-06-01-preview",
@@ -402,7 +444,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"content": {
-					"query": "IF NOT EXISTS (SELECT * FROM sys.objects O JOIN sys.schemas S ON O.schema_id = S.schema_id WHERE O.NAME = 'NYCTaxiTripSmall' AND O.TYPE = 'U' AND S.NAME = 'dbo')\nCREATE TABLE dbo.NYCTaxiTripSmall\n    (\n    [VendorID] bigint, [store_and_fwd_flag] nvarchar(1) NULL, [RatecodeID] float NULL, \n    [PULocationID] bigint NULL, [DOLocationID] bigint NULL, [passenger_count] float NULL, \n    [trip_distance] float NULL, [fare_amount] float NULL, [extra] float NULL, \n    [mta_tax] float NULL, [tip_amount] float NULL, [tolls_amount] float NULL, \n    [ehail_fee] float NULL, [improvement_surcharge] float NULL, [total_amount] float NULL, \n    [payment_type] float NULL, [trip_type] float NULL, [congestion_surcharge] float NULL\n    )\nWITH ( DISTRIBUTION = ROUND_ROBIN, CLUSTERED COLUMNSTORE INDEX )\nGO\nCOPY INTO dbo.NYCTaxiTripSmall\n(VendorID 1, store_and_fwd_flag 4, RatecodeID 5, PULocationID 6, DOLocationID 7, passenger_count 8, trip_distance 9, fare_amount 10, extra 11, mta_tax 12, tip_amount 13, tolls_amount 14, ehail_fee 15, improvement_surcharge 16, total_amount 17, payment_type 18, trip_type 19, congestion_surcharge 20)\nFROM 'https://dlhcmute.dfs.core.windows.net/data/synapse/workspaces/hcmutebigdata01/warehouse/nyctaxi.db/passengercountstatsnew/' \nWITH\n(\n    FILE_TYPE = 'PARQUET'\n    ,MAXERRORS = 0\n    ,IDENTITY_INSERT = 'OFF'\n    ,AUTO_CREATE_TABLE ='ON'\n)",
+					"query": "IF NOT EXISTS (SELECT * FROM sys.objects O JOIN sys.schemas S ON O.schema_id = S.schema_id WHERE O.NAME = 'NYCTaxiTripSmall' AND O.TYPE = 'U' AND S.NAME = 'dbo')\nCREATE TABLE dbo.NYCTaxiTripSmall\n    (\n    [VendorID] bigint, \n    [store_and_fwd_flag] nvarchar(1) NULL, \n    [RatecodeID] float NULL, \n    [PULocationID] bigint NULL, \n    [DOLocationID] bigint NULL, \n    [passenger_count] float NULL, \n    [trip_distance] float NULL, \n    [fare_amount] float NULL, [extra] float NULL, \n    [mta_tax] float NULL, \n    [tip_amount] float NULL, \n    [tolls_amount] float NULL, \n    [ehail_fee] float NULL, \n    [improvement_surcharge] float NULL, \n    [total_amount] float NULL, \n    [payment_type] float NULL, \n    [trip_type] float NULL, \n    [congestion_surcharge] float NULL\n    )\nWITH ( DISTRIBUTION = ROUND_ROBIN, CLUSTERED COLUMNSTORE INDEX )\nGO\nCOPY INTO dbo.NYCTaxiTripSmall\n(VendorID 1, store_and_fwd_flag 4, RatecodeID 5, PULocationID 6, DOLocationID 7, passenger_count 8, trip_distance 9, fare_amount 10, extra 11, mta_tax 12, tip_amount 13, tolls_amount 14, ehail_fee 15, improvement_surcharge 16, total_amount 17, payment_type 18, trip_type 19, congestion_surcharge 20)\nFROM 'https://dlhcmute.dfs.core.windows.net/data/synapse/workspaces/hcmutebigdata01/warehouse/nyctaxi.db/passengercountstatsnew/' \nWITH\n(\n    FILE_TYPE = 'PARQUET'\n    ,MAXERRORS = 0\n    ,IDENTITY_INSERT = 'OFF'\n    ,AUTO_CREATE_TABLE ='ON'\n)",
 					"metadata": {
 						"language": "sql"
 					},
@@ -517,26 +559,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 6')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "CREATE DATABASE DataExplorationDB \nCOLLATE Latin1_General_100_BIN2_UTF8;",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "master",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/SQL script 7')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
@@ -593,7 +615,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "6d988a8d-233a-4bf7-983a-6672fa479e27"
+						"spark.autotune.trackingId": "4cea1704-e1c5-4b63-b776-a069a7e0a232"
 					}
 				},
 				"metadata": {
