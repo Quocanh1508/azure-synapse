@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 10",
+	"properties": {
+		"content": {
+			"query": "CREATE DATABASE NYCTaxiDB\nCOLLATE Latin1_General_100_BIN2_UTF8;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
