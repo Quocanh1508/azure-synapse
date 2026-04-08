@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "ca75f1aa-246b-4c08-baad-190f76c72213"
+				"spark.autotune.trackingId": "1ec0dd85-43a8-4ea7-b0e0-ffc4dc676f87"
 			}
 		},
 		"metadata": {
@@ -61,14 +61,14 @@
 					"df = spark.read.load('wasbs://nyctlc@azureopendatastorage.blob.core.windows.net/green/puYear=2019/puMonth=1/*.parquet')\n",
 					"display(df.limit(10))"
 				],
-				"execution_count": 4
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
 				"source": [
 					"df.printSchema()"
 				],
-				"execution_count": 5
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -92,7 +92,7 @@
 					"display(df)\n",
 					"df.write.mode(\"overwrite\").saveAsTable(\"nyctaxi.passengercountstatsnew\")"
 				],
-				"execution_count": 7
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
