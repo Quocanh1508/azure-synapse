@@ -177,7 +177,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"notebook": {
-								"referenceName": "TaxiData_Pipeline",
+								"referenceName": "Notebook 1",
 								"type": "NotebookReference"
 							},
 							"snapshot": true,
@@ -196,7 +196,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/notebooks/TaxiData_Pipeline')]"
+				"[concat(variables('workspaceId'), '/notebooks/Notebook 1')]"
 			]
 		},
 		{
