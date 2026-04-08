@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebook": {
-						"referenceName": "TaxiData_Pipeline",
+						"referenceName": "Notebook 1",
 						"type": "NotebookReference"
 					},
 					"snapshot": true
