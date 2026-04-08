@@ -158,48 +158,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/Pipeline 2')]",
-			"type": "Microsoft.Synapse/workspaces/pipelines",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"activities": [
-					{
-						"name": "Notebook1",
-						"type": "SynapseNotebook",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebook": {
-								"referenceName": "Notebook 1",
-								"type": "NotebookReference"
-							},
-							"snapshot": true,
-							"conf": {
-								"spark.dynamicAllocation.enabled": null,
-								"spark.dynamicAllocation.minExecutors": null,
-								"spark.dynamicAllocation.maxExecutors": null
-							},
-							"numExecutors": null
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/notebooks/Notebook 1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/DestinationDataset_8zs')]",
 			"type": "Microsoft.Synapse/workspaces/datasets",
 			"apiVersion": "2019-06-01-preview",
@@ -479,6 +437,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 10')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE DATABASE NYCTaxiDB\nCOLLATE Latin1_General_100_BIN2_UTF8;\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/SQL script 2')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
@@ -585,6 +563,26 @@
 			"properties": {
 				"content": {
 					"query": "\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://dlhcmute.dfs.core.windows.net/data/NYCTaxi/PassengerCountStats_parquetformat/**',\n        FORMAT = 'PARQUET'\n    ) AS [result]\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 9')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE EXTERNAL DATA SOURCE Datasrc\nWITH (\n    LOCATION = 'https://hcmutebigdata01.dfs.core.windows.net'\n);\n",
 					"metadata": {
 						"language": "sql"
 					},
@@ -835,6 +833,18 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/sqlpoolgr8')]",
+			"type": "Microsoft.Synapse/workspaces/sqlPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"collation": "SQL_Latin1_General_CP1_CI_AS",
+				"maxSizeBytes": 263882790666240,
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "japaneast"
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/sparkpoolgr8')]",
 			"type": "Microsoft.Synapse/workspaces/bigDataPools",
 			"apiVersion": "2019-06-01-preview",
@@ -854,18 +864,6 @@
 				"sparkVersion": "3.5",
 				"isComputeIsolationEnabled": false,
 				"sessionLevelPackagesEnabled": false,
-				"annotations": []
-			},
-			"dependsOn": [],
-			"location": "japaneast"
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/sqlpoolgr8')]",
-			"type": "Microsoft.Synapse/workspaces/sqlPools",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"collation": "SQL_Latin1_General_CP1_CI_AS",
-				"maxSizeBytes": 263882790666240,
 				"annotations": []
 			},
 			"dependsOn": [],
